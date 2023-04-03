@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "src/_denoisor/multiLayer_perceptron_filter",
+		"source" : "src/_denoisor/multiLayer_perceptron_filter"
+	}
+}

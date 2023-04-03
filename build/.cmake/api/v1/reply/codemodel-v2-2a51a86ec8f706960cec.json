@@ -1,0 +1,311 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-RELEASE-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "include",
+					"jsonFile" : "directory-include-RELEASE-7ead17b99bffc88b66bb.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "include",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "src",
+					"childIndexes" : 
+					[
+						3
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-src-RELEASE-b6cf2213fc5053b67c22.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src"
+				},
+				{
+					"build" : "src/_denoisor",
+					"childIndexes" : 
+					[
+						4,
+						5,
+						6,
+						7,
+						8,
+						9
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-src._denoisor-RELEASE-3ea4970abf84c0dde7a4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 0,
+					"source" : "src/_denoisor"
+				},
+				{
+					"build" : "src/_denoisor/reclusive_event_denoisor",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-src._denoisor.reclusive_event_denoisor-RELEASE-802d0c46f8d0c87f5672.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 3,
+					"projectIndex" : 0,
+					"source" : "src/_denoisor/reclusive_event_denoisor",
+					"targetIndexes" : 
+					[
+						5,
+						9
+					]
+				},
+				{
+					"build" : "src/_denoisor/yang_noise",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-src._denoisor.yang_noise-RELEASE-d95961b432e543d0eea8.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 3,
+					"projectIndex" : 0,
+					"source" : "src/_denoisor/yang_noise",
+					"targetIndexes" : 
+					[
+						7,
+						11
+					]
+				},
+				{
+					"build" : "src/_denoisor/double_window_filter",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-src._denoisor.double_window_filter-RELEASE-694904f7b23995089fff.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 3,
+					"projectIndex" : 0,
+					"source" : "src/_denoisor/double_window_filter",
+					"targetIndexes" : 
+					[
+						0,
+						3
+					]
+				},
+				{
+					"build" : "src/_denoisor/khodamoradi_noise",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-src._denoisor.khodamoradi_noise-RELEASE-4cdc44f0af1866889413.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 3,
+					"projectIndex" : 0,
+					"source" : "src/_denoisor/khodamoradi_noise",
+					"targetIndexes" : 
+					[
+						1,
+						4
+					]
+				},
+				{
+					"build" : "src/_denoisor/time_surface",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-src._denoisor.time_surface-RELEASE-15a411e1b5ccfbcbf542.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 3,
+					"projectIndex" : 0,
+					"source" : "src/_denoisor/time_surface",
+					"targetIndexes" : 
+					[
+						6,
+						10
+					]
+				},
+				{
+					"build" : "src/_denoisor/multiLayer_perceptron_filter",
+					"jsonFile" : "directory-src._denoisor.multiLayer_perceptron_filter-RELEASE-885148d2586cf674990e.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 3,
+					"projectIndex" : 0,
+					"source" : "src/_denoisor/multiLayer_perceptron_filter",
+					"targetIndexes" : 
+					[
+						8
+					]
+				}
+			],
+			"name" : "RELEASE",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9
+					],
+					"name" : "dvsfire",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 6,
+					"id" : "double_window_filter::@e08cc916f8bbe582c877",
+					"jsonFile" : "target-double_window_filter-RELEASE-7b75b1cacf1832e7dc58.json",
+					"name" : "double_window_filter",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "khodamoradi_noise::@9dfbcbdfd7eeac0d5bab",
+					"jsonFile" : "target-khodamoradi_noise-RELEASE-f3365766685bb72bcf22.json",
+					"name" : "khodamoradi_noise",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "kore::@14b3099d61bfdbeae804",
+					"jsonFile" : "target-kore-RELEASE-3db21cfe17feed78f10e.json",
+					"name" : "kore",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "m_double_window_filter::@e08cc916f8bbe582c877",
+					"jsonFile" : "target-m_double_window_filter-RELEASE-aac8f4efb7a86f927ded.json",
+					"name" : "m_double_window_filter",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "m_khodamoradi_noise::@9dfbcbdfd7eeac0d5bab",
+					"jsonFile" : "target-m_khodamoradi_noise-RELEASE-1de92d09f5ad9810b5d4.json",
+					"name" : "m_khodamoradi_noise",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "m_reclusive_event_denoisor::@eabc4b403864345c6566",
+					"jsonFile" : "target-m_reclusive_event_denoisor-RELEASE-4f50e5b8af2654a79040.json",
+					"name" : "m_reclusive_event_denoisor",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "m_time_surface::@eab748af220b3f84543b",
+					"jsonFile" : "target-m_time_surface-RELEASE-3152d9e7a86db3a3e13a.json",
+					"name" : "m_time_surface",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "m_yang_noise::@82f4a02dacfa404f7ebb",
+					"jsonFile" : "target-m_yang_noise-RELEASE-6448fb5bc2169c2443a9.json",
+					"name" : "m_yang_noise",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "multiLayer_perceptron_filter::@ecc729aeb2b21ce13db9",
+					"jsonFile" : "target-multiLayer_perceptron_filter-RELEASE-ec6ab40172e30376c7c1.json",
+					"name" : "multiLayer_perceptron_filter",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "reclusive_event_denoisor::@eabc4b403864345c6566",
+					"jsonFile" : "target-reclusive_event_denoisor-RELEASE-248ebbb2702ab3a6c8f1.json",
+					"name" : "reclusive_event_denoisor",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "time_surface::@eab748af220b3f84543b",
+					"jsonFile" : "target-time_surface-RELEASE-0cf842db91451c7c57c0.json",
+					"name" : "time_surface",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "yang_noise::@82f4a02dacfa404f7ebb",
+					"jsonFile" : "target-yang_noise-RELEASE-e2f14e330840e1fb3f37.json",
+					"name" : "yang_noise",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/kuga/Workspace/tmp-emlb-v2/build",
+		"source" : "/home/kuga/Workspace/tmp-emlb-v2"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 5
+	}
+}

@@ -1,0 +1,45 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"src/_denoisor/yang_noise/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 5,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "/home/kuga/Workspace/tmp-emlb-v2/build/../modules",
+			"paths" : 
+			[
+				"/home/kuga/Workspace/tmp-emlb-v2/modules/Km_yang_noise.so"
+			],
+			"targetId" : "m_yang_noise::@82f4a02dacfa404f7ebb",
+			"targetIndex" : 7,
+			"type" : "target"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "src/_denoisor/yang_noise",
+		"source" : "src/_denoisor/yang_noise"
+	}
+}
