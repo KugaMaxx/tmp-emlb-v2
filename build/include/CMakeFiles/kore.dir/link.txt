@@ -1,1 +1,0 @@
-/usr/bin/g++ -fPIC   -Ofast -march=native -O3 -DNDEBUG -flto -shared  -o /home/kuga/Workspace/tmp-emlb-v2/modules/kore.cpython-310-x86_64-linux-gnu.so CMakeFiles/kore.dir/kore.cpp.o 

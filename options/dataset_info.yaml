@@ -119,6 +119,14 @@ N-END:
   - Wheelchair
   - Windmill
   frame: false
+RGB DAVIS:
+  class:
+  - .info
+  - .preview
+  - .raw
+  - Indoor
+  - Outdoor
+  frame: false
 demo:
   class:
   - samples

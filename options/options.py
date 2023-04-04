@@ -112,7 +112,7 @@ def set_inference_options(parser):
     parser.add_argument('--output_file_type', type=str, default='pkl', help='output file type')
 
     """ Data Preprocess Settings """
-    parser.add_argument('--excl_hotpixel', type=bool, default=False)
+    parser.add_argument('--excl_hotpixel', type=bool, default=True)
 
     """ Parser """
     args = parser.parse_args()

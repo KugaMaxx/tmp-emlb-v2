@@ -45,7 +45,8 @@ class multiLayer_perceptron_filter(Demplate):
         self.model = mlpf
 
     def run(self, data, 
-            params={'model_path': os.getcwd() + '/modules/_net/MLPF_2xMSEO1H20_linear_7.pt'}):
+            params={'model_path': os.getcwd() + '/modules/_net/MLPF_2xMSEO1H20_linear_7.pt',
+                    'batch_size': 10000000}):
         model = self.model.init(data['size'][0], data['size'][1])
         data['events'] = data['events'][model.run(data['events'], **params)]
         return data
