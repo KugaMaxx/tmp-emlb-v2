@@ -1,11 +1,11 @@
-#include "time_surface.hpp"
+#include "event_denoise_convolution_network.hpp"
 
 namespace kdv {
 
-    class TimeSurface : public edn::TimeSurface, public dv::ModuleBase {
+    class EventDenoiseConvolutionNetwork : public edn::EventDenoiseConvolutionNetwork, public dv::ModuleBase {
     public:
         static const char *initDescription() {
-            return "Noise filter using the Time Surface.";
+            return "Noise filter using the EventDenoiseConvolutionNetwork.";
         };
 
         static void initInputs(dv::InputDefinitionList &in) {
@@ -17,21 +17,19 @@ namespace kdv {
         };
 
         static void initConfigOptions(dv::RuntimeConfig &config) {
-            config.add("decay", dv::ConfigOption::intOption("Time decay.", 30000, 1, 1000000));
-            config.add("squareR", dv::ConfigOption::intOption("Radius R of matrix for time surface.", 1, 1, 7));
-            config.add("threshold", dv::ConfigOption::floatOption("Threshold value for mean time surface value.", 0.3, 0, 1));
+            config.add("params", dv::ConfigOption::floatOption("Spatial blur coefficient.", 1.0, 0.1, 3.0));
 
-            config.setPriorityOptions({"decay", "squareR", "threshold"});
+            config.setPriorityOptions({"params"});
         };
 
-        TimeSurface() {
+        EventDenoiseConvolutionNetwork() {
             sizeX    = inputs.getEventInput("events").sizeX();
             sizeY    = inputs.getEventInput("events").sizeY();
             _LENGTH_ = sizeX * sizeY;
             outputs.getEventOutput("events").setup(inputs.getEventInput("events"));
         };
 
-        ~TimeSurface() {}
+        ~EventDenoiseConvolutionNetwork() {}
 
         void run() override {
             auto inEvent  = inputs.getEventInput("events").events();
@@ -52,13 +50,11 @@ namespace kdv {
         };
 
         void configUpdate() override {
-            decay     = config.getInt("decay");
-            squareR   = config.getInt("squareR");
-            threshold = config.getFloat("threshold");
+            params = config.getFloat("params");
             regenerateParam();
         };
     };
 
 }
 
-registerModuleClass(kdv::TimeSurface)
+registerModuleClass(kdv::EventDenoiseConvolutionNetwork)

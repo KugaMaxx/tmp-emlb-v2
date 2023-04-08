@@ -82,7 +82,7 @@ namespace edn {
                 }
             }
 
-            // // Update
+            // Update
             xCell.timestamp_ = evtTimestamp;
             xCell.polarity_  = evtPolarity;
             xCell.y_         = evtY;

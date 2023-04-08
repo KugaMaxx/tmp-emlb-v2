@@ -23,7 +23,9 @@ namespace edn {
         std::vector<std::pair<int16_t, int16_t>> offsets;
 
         void regenerateParam() {
+            // resize memory cell
             mT.resize(sizeX * sizeY);
+            // generate quick search array
             int32_t squareL = 2 * squareR + 1;
             _NEIGH_         = squareL * squareL;
             offsets.resize(_NEIGH_);

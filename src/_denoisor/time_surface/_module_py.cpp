@@ -47,5 +47,5 @@ namespace kpy {
 PYBIND11_MODULE(time_surface, m) {
     py::class_<kpy::TimeSurface>(m, "init", py::module_local())
         .def(py::init<int16_t, int16_t>())
-        .def("run", &kpy::TimeSurface::run, py::arg("input"), py::arg("decay") = 30000, py::arg("squareR") = 1, py::arg("threshold") = 0.55);
+        .def("run", &kpy::TimeSurface::run, py::arg("input"), py::arg("decay") = 30000, py::arg("square_r") = 1, py::arg("threshold") = 0.3);
 }

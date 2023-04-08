@@ -4,3 +4,4 @@ mkdir build
 cd build
 cmake .. -DTORCH_DIR:STRING=/usr/local/cuda/include
 ```
+<!-- sudo apt-get install libboost-dev -->

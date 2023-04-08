@@ -1,7 +1,6 @@
 #include "denoisor.hpp"
 #include "kore.hpp"
 
-#include <immintrin.h>
 #include <iostream>
 #include <math.h>
 #include <stdlib.h>
@@ -16,24 +15,24 @@ namespace edn {
 
     class MultiLayerPerceptronFilter : public EventDenoisor {
     public:
+        std::string modelPath;
+        int32_t _BATCHSIZE_;
         float_t decay;
         int16_t squareR;
         float_t threshold;
-        std::string modelPath;
-        int32_t _BATCH_;
 
         size_t index = 0;
         std::vector<kore::Event> mT;
 
         int32_t _ARRAY_;
         torch::jit::script::Module module;
-        torch::Tensor pack;
+        torch::Tensor batch;
         c10::Device device = torch::Device(torch::kCUDA, 0);
 
         void regenerateParam() {
             module  = torch::jit::load(modelPath, device);
             _ARRAY_ = (2 * squareR + 1) * (2 * squareR + 1) * 2;
-            pack = torch::empty({_BATCH_, _ARRAY_});
+            batch = torch::empty({_BATCHSIZE_, _ARRAY_});
             mT.resize(sizeX * sizeY);
         }
 

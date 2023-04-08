@@ -18,14 +18,19 @@ namespace edn {
         int16_t squareR;
         int16_t threshold;
 
-        static const uint8_t _MEMORY_ = 4;
-        boost::circular_buffer<kore::Event> lastREvents{_MEMORY_}; // real
-        boost::circular_buffer<kore::Event> lastNEvents{_MEMORY_}; // noise
+        uint8_t wLen;
+        boost::circular_buffer<kore::Event> lastREvents; // real
+        boost::circular_buffer<kore::Event> lastNEvents; // noise
+
+        void regenerateParam() {
+            lastREvents.resize(wLen);
+            lastNEvents.resize(wLen);
+        }
 
         bool calculateDensity(const int16_t &evtX, const int16_t &evtY, const int64_t &evtTimestamp, const bool &evtPolarity) {
             uint16_t count = 0;
 
-            for (auto& lastR : lastREvents) {
+            for (auto &lastR : lastREvents) {
                 if (abs(evtX - lastR.x()) + abs(evtY - lastR.y()) <= squareR) {
                     count++;
                 }

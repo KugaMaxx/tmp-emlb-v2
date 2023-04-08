@@ -26,6 +26,12 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 # Find dv-runtime supports
 find_package(dv REQUIRED)
 
+# Find eigen3 supports
+find_package(Eigen3 REQUIRED)
+
+# Find boost supports
+find_package(Boost REQUIRED)
+
 # Find libtorch supports
 if(DEFINED TORCH_DIR)
     set(CUDA_INCLUDE_DIRS "/usr/local/cuda/include")

@@ -17,10 +17,11 @@ namespace kdv {
         };
 
         static void initConfigOptions(dv::RuntimeConfig &config) {
-            config.add("squareR", dv::ConfigOption::intOption("Max L1 distance.", 10, 1, 1000));
-            config.add("threshold", dv::ConfigOption::intOption("Threshold value (max of window size).", 1, 1, 8));
+            config.add("squareR", dv::ConfigOption::intOption("Max L1 distance.", 9, 1, 1000));
+            config.add("threshold", dv::ConfigOption::intOption("Threshold value (max of window length).", 1, 1, 100));
+            config.add("wLen", dv::ConfigOption::intOption("Window length.", 36, 4, 100));
 
-            config.setPriorityOptions({"squareR", "threshold"});
+            config.setPriorityOptions({"squareR", "threshold", "wLen"});
         };
 
         DoubleWindowFilter() {
@@ -53,6 +54,8 @@ namespace kdv {
         void configUpdate() override {
             squareR   = config.getInt("squareR");
             threshold = config.getInt("threshold");
+            wLen = config.getInt("wLen");
+            regenerateParam();
         };
     };
 

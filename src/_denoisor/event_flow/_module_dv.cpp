@@ -1,11 +1,11 @@
-#include "time_surface.hpp"
+#include "event_flow.hpp"
 
 namespace kdv {
 
-    class TimeSurface : public edn::TimeSurface, public dv::ModuleBase {
+    class EventFlow : public edn::EventFlow, public dv::ModuleBase {
     public:
         static const char *initDescription() {
-            return "Noise filter using the Time Surface.";
+            return "Noise filter using the EventFlow.";
         };
 
         static void initInputs(dv::InputDefinitionList &in) {
@@ -17,21 +17,21 @@ namespace kdv {
         };
 
         static void initConfigOptions(dv::RuntimeConfig &config) {
-            config.add("decay", dv::ConfigOption::intOption("Time decay.", 30000, 1, 1000000));
-            config.add("squareR", dv::ConfigOption::intOption("Radius R of matrix for time surface.", 1, 1, 7));
-            config.add("threshold", dv::ConfigOption::floatOption("Threshold value for mean time surface value.", 0.3, 0, 1));
+            config.add("deltaT", dv::ConfigOption::intOption("Time delta for filter.", 3000, 1, 10000));
+            config.add("squareR", dv::ConfigOption::intOption("Radius R of matrix for density Matrix.", 1, 1, 7));
+            config.add("threshold", dv::ConfigOption::floatOption("Threshold of velocity.", 2, 0, 10));
 
-            config.setPriorityOptions({"decay", "squareR", "threshold"});
+            config.setPriorityOptions({"deltaT", "squareR", "threshold"});
         };
 
-        TimeSurface() {
+        EventFlow() {
             sizeX    = inputs.getEventInput("events").sizeX();
             sizeY    = inputs.getEventInput("events").sizeY();
             _LENGTH_ = sizeX * sizeY;
             outputs.getEventOutput("events").setup(inputs.getEventInput("events"));
         };
 
-        ~TimeSurface() {}
+        ~EventFlow() {}
 
         void run() override {
             auto inEvent  = inputs.getEventInput("events").events();
@@ -52,13 +52,12 @@ namespace kdv {
         };
 
         void configUpdate() override {
-            decay     = config.getInt("decay");
+            deltaT    = config.getInt("deltaT");
             squareR   = config.getInt("squareR");
             threshold = config.getFloat("threshold");
-            regenerateParam();
         };
     };
 
 }
 
-registerModuleClass(kdv::TimeSurface)
+registerModuleClass(kdv::EventFlow)

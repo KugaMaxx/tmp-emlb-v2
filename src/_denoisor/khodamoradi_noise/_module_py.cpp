@@ -46,5 +46,5 @@ namespace kpy {
 PYBIND11_MODULE(khodamoradi_noise, m) {
     py::class_<kpy::KhodamoradiNoise>(m, "init", py::module_local())
         .def(py::init<int16_t, int16_t>())
-        .def("run", &kpy::KhodamoradiNoise::run, py::arg("input"), py::arg("deltaT") = 1000, py::arg("threshold") = 1);
+        .def("run", &kpy::KhodamoradiNoise::run, py::arg("input"), py::arg("delta_t") = 1000, py::arg("threshold") = 1);
 }

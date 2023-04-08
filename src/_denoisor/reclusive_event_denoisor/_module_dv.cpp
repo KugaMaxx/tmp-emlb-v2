@@ -17,10 +17,10 @@ namespace kdv {
         };
 
         static void initConfigOptions(dv::RuntimeConfig &config) {
-            config.add("sigmaS", dv::ConfigOption::floatOption("Spatial blur coefficient.", 1.0, 0.1, 3.0));
+            config.add("sigmaS", dv::ConfigOption::floatOption("Spatial blur coefficient.", 0.7, 0.1, 3.0));
             config.add("sigmaT", dv::ConfigOption::intOption("Time sigma.", 1, 1, 5));
-            config.add("samplarT", dv::ConfigOption::floatOption("Log scale to slice event stream.", -0.3, -2.0, 2.0));
-            config.add("threshold", dv::ConfigOption::floatOption("Threshold value.", 0.5, -1.0, 3.0));
+            config.add("samplarT", dv::ConfigOption::floatOption("Log scale to slice event stream.", -0.8, -2.0, 2.0));
+            config.add("threshold", dv::ConfigOption::floatOption("Threshold value.", 0.2, -1.0, 3.0));
 
             config.setPriorityOptions({"sigmaT", "sigmaS", "samplarT", "threshold"});
         };

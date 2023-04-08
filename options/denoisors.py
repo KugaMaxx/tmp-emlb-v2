@@ -4,56 +4,118 @@ import os.path as osp
 import numpy as np
 from abc import ABC, abstractmethod
 
+from evtool.dtype import Event, Frame, Size
+
 from modules import kore
-from modules import reclusive_event_denoisor as red
-from modules import yang_noise as yn
-from modules import double_window_filter as dwf
-from modules import khodamoradi_noise as kn
-from modules import time_surface as ts
-from modules import multiLayer_perceptron_filter as mlpf
+from modules import reclusive_event_denoisor
+from modules import yang_noise
+from modules import double_window_filter
+from modules import khodamoradi_noise
+from modules import time_surface
+from modules import event_flow
+from modules import multiLayer_perceptron_filter
 
-# cwd = os.getcwd() + '/models'
-# 存放模型参数的地方
 
-class Demplate(ABC):
-    def __init__(self):
+class Template(ABC):
+    def __init__(self, model, **params):
         super().__init__()
-        self.name  = 'Template'
-        self.model = None
-
-    @abstractmethod
-    def run(self, data):
-        self.model.init(data['size'][0], data['size'][1])
-        idx = self.model.run(data['events'], params=1)
-        data['events'] = data['events'][idx]
-
-
-class reclusive_event_denoisor(Demplate):
-    def __init__(self):
-        self.name  = 'reclusive_event_denoisor'
-        self.model = red
+        self.model = model
+        self.params = params
 
     def run(self, data):
         model = self.model.init(data['size'][0], data['size'][1])
-        data['events'] = data['events'][model.run(data['events'])]
+        idx = model.run(data['events'], **self.params)
+        data['events'] = data['events'][idx]
         return data
+
+
+class red(Template):
+    def __init__(self, params={}):
+        super().__init__(
+            reclusive_event_denoisor,
+            **params
+        )
+
+
+class ynoise(Template):
+    def __init__(self, params={"delta_t": 10000,
+                               "square_r": 1,
+                               "threshold": 2}):
+        super().__init__(
+            yang_noise,
+            **params
+        )
     
 
-class multiLayer_perceptron_filter(Demplate):
-    def __init__(self):
-        self.name  = 'multiLayer_perceptron_filter'
-        self.model = mlpf
-
-    def run(self, data, 
-            params={'model_path': os.getcwd() + '/modules/_net/MLPF_2xMSEO1H20_linear_7.pt',
-                    'batch_size': 10000000}):
-        model = self.model.init(data['size'][0], data['size'][1])
-        data['events'] = data['events'][model.run(data['events'], **params)]
-        return data
+class dwf(Template):
+    def __init__(self, params={"w_len": 36,
+                               'square_r': 9,
+                               "threshold": 1}):
+        super().__init__(
+            double_window_filter,
+            **params
+        )
 
 
-def Denoisor(args):
-    model = eval(args.denoisor)
+class knoise(Template):
+    def __init__(self, params={"delta_t": 1000,
+                               "threshold": 1}):
+        super().__init__(
+            khodamoradi_noise,
+            **params
+        )
+
+
+class ts(Template):
+    def __init__(self, params={"decay": 30000,
+                               "square_r": 1,
+                               "threshold": 0.3}):
+        super().__init__(
+            time_surface,
+            **params
+        )
+
+
+class evflow(Template):
+    def __init__(self, params={"delta_t":3000,
+                               "square_r": 1,
+                               "threshold":2}):
+        super().__init__(
+            event_flow,
+            **params
+        )
+
+
+class mlpf(Template):
+    def __init__(self, params={'model_path': os.getcwd() + '/modules/_net/MLPF_2xMSEO1H20_linear_7.pt',
+                               'batch_size': 10000000,
+                               'decay': 100000,
+                               "square_r": 3,
+                               'threshold':0.8}):
+        super().__init__(
+            multiLayer_perceptron_filter,
+            **params
+        )
+
+
+class edncnn(Template):
+    def __init__(self, params={}):
+        super().__init__(
+            "TODO",
+            **params
+        )
+
+
+class evzoom(Template):
+    def __init__(self, params={}):
+        super().__init__(
+            "TODO",
+            **params
+        )
+
+
+def Denoisor(name):
+    model = eval(name)
     return model()
 
 

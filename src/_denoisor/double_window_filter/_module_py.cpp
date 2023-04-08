@@ -12,9 +12,10 @@ namespace kpy {
 
         ~DoubleWindowFilter() {}
 
-        py::array_t<bool> run(const kore::EventPybind &input, const int16_t squareR_, const int16_t threshold_) {
+        py::array_t<bool> run(const kore::EventPybind &input, const uint8_t wLen_, const int16_t squareR_, const int16_t threshold_) {
             squareR   = squareR_;
             threshold = threshold_;
+            wLen = wLen_;
 
             py::buffer_info buf = input.request();
             kore::Event *ptr    = static_cast<kore::Event *>(buf.ptr);
@@ -22,6 +23,8 @@ namespace kpy {
             for (size_t i = 0; i < buf.size; i++) {
                 inEvent[i] = ptr[i];
             }
+
+            regenerateParam();
 
             std::vector<bool> vec;
             vec.reserve(inEvent.size());
@@ -44,5 +47,5 @@ namespace kpy {
 PYBIND11_MODULE(double_window_filter, m) {
     py::class_<kpy::DoubleWindowFilter>(m, "init", py::module_local())
         .def(py::init<int16_t, int16_t>())
-        .def("run", &kpy::DoubleWindowFilter::run, py::arg("input"), py::arg("squareR") = 10, py::arg("threshold") = 1);
+        .def("run", &kpy::DoubleWindowFilter::run, py::arg("input"), py::arg("w_len") = 36, py ::arg("square_r") = 9, py::arg("threshold") = 1);
 }

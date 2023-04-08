@@ -1,8 +1,9 @@
 build/
 dist/
+modules/*.so
 results/
 src/evtool.egg-info
-__pycache__
+__pycache__/
 .vscode
 .history
 
