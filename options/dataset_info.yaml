@@ -1,3 +1,54 @@
+D-CEND:
+  class:
+  - Hands
+  - Architecture
+  - Bicycle
+  - Boat
+  - Books
+  - Bubble
+  - Camera
+  - Car_Day
+  - Checker_Highlight
+  - Checker_Shadow
+  - Consturcture
+  - Corridor
+  - Courtyard
+  - Dance
+  - Decoration
+  - Drop_Balls
+  - Dump
+  - Fence
+  - Ferriswheel
+  - Food
+  - Hall
+  - Leaf
+  - Lockers
+  - Meeting_Room
+  - Minions
+  - Mirror
+  - Newton
+  - Pedestrians
+  - Pendulum
+  - Poker
+  - Punch
+  - Reflact
+  - Ride
+  - Ruler
+  - Shapes_Day
+  - Shuttlecock
+  - Snackery
+  - Snow
+  - Spinning
+  - Stacks
+  - Stairs
+  - Study_Lounge
+  - Swan
+  - Temple
+  - Toys
+  - Tree
+  - UAV
+  - Windows
+  frame: false
 D-END:
   class:
   - Hall
@@ -49,6 +100,11 @@ D-END:
   - UAV
   - Windows
   frame: false
+DND21:
+  class:
+  - driving
+  - hotel_bar
+  frame: false
 DVS NOISE20:
   class:
   - alley
@@ -67,6 +123,61 @@ DVS NOISE20:
   - stairs
   - toys
   - wall
+  frame: false
+ENFS:
+  class:
+  - hr
+  frame: false
+N-CEND:
+  class:
+  - Lantern
+  - Bat
+  - Beams
+  - Bed
+  - Bridge
+  - Car_Night
+  - Ceiling
+  - Checker_Blur
+  - Checker_Lowlight
+  - Cloth
+  - Cola_Can
+  - Dark_Building
+  - Fire
+  - Flip_Chariot
+  - Fly_Soccer
+  - Garage
+  - Gas_Tank
+  - Gun
+  - Hall_Lowlight
+  - Keyboard
+  - Landmark
+  - LED
+  - LEGO
+  - Light_Board
+  - Lounge
+  - Machine
+  - Mall
+  - Office
+  - Party
+  - Pedestrian
+  - Rain
+  - Rowing
+  - School
+  - Screen
+  - Shapes_Night
+  - Signage
+  - Ski_Walker
+  - Snowball
+  - Sparkler
+  - Squating
+  - Station
+  - String
+  - Tyre
+  - Wall
+  - Water
+  - Water_Cooler
+  - Wheelchair
+  - Windmill
   frame: false
 N-END:
   class:
@@ -127,7 +238,91 @@ RGB DAVIS:
   - Indoor
   - Outdoor
   frame: false
+benches:
+  class:
+  - benches-1.aedat4
+  - benches-2.aedat4
+  - benches-3.aedat4
+  frame: false
+bigChecker:
+  class:
+  - bigChecker-1.aedat4
+  - bigChecker-2.aedat4
+  - bigChecker-3.aedat4
+  frame: false
+bike:
+  class:
+  - bike-1.aedat4
+  - bike-2.aedat4
+  - bike-3.aedat4
+  frame: false
+bricks:
+  class:
+  - bricks-1.aedat4
+  - bricks-2.aedat4
+  - bricks-3.aedat4
+  frame: false
+checkerFast:
+  class:
+  - checkerFast-1.aedat4
+  - checkerFast-2.aedat4
+  - checkerFast-3.aedat4
+  frame: false
+checkerSlow:
+  class:
+  - checkerSlow-1.aedat4
+  - checkerSlow-2.aedat4
+  - checkerSlow-3.aedat4
+  frame: false
+classroom:
+  class:
+  - classroom-1.aedat4
+  - classroom-2.aedat4
+  - classroom-3.aedat4
+  frame: false
+coference:
+  class:
+  - conference-1.aedat4
+  - conference-2.aedat4
+  - conference-3.aedat4
+  frame: false
 demo:
   class:
   - samples
+  frame: false
+labFast:
+  class:
+  - labFast-1.aedat4
+  - labFast-2.aedat4
+  - labFast-3.aedat4
+  frame: false
+labSlow:
+  class:
+  - labSlow-1.aedat4
+  - labSlow-2.aedat4
+  - labSlow-3.aedat4
+  frame: false
+pavers:
+  class:
+  - pavers-1.aedat4
+  - pavers-2.aedat4
+  - pavers-3.aedat4
+  frame: false
+soccer:
+  class:
+  - soccer-1.aedat4
+  - soccer-2.aedat4
+  - soccer-3.aedat4
+  frame: false
+stairs:
+  class:
+  - stairs-1.aedat4
+  - stairs-2.aedat4
+  - stairs-3.aedat4
+  frame: false
+toys:
+  class:
+  - toys-1.aedat4
+  - toys-2.aedat4
+  - toys-3.aedat4
   frame: false

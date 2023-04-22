@@ -56,7 +56,7 @@ class Dataset:
         self.use_aps = use_aps
 
         # load all file paths
-        self.file_paths = [file for folder in fclass for file in glob.glob(f"{path}/{folder}/*")]
+        self.file_paths = [file for folder in glob.glob(self.path+'/*') for file in glob.glob(f"{folder}/*")]
         self.file_nums  = len(self.file_paths)
         self.file_paths.sort()
     

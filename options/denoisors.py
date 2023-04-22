@@ -30,7 +30,7 @@ class Template(ABC):
 
 
 class red(Template):
-    def __init__(self, params={}):
+    def __init__(self, params={'samplarT': -0.8, 'sigmaS': 0.6, 'sigmaT': 1, 'threshold': 0.3}):
         super().__init__(
             reclusive_event_denoisor,
             **params
