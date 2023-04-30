@@ -72,9 +72,9 @@ You can run `eval_denoisor.py` to test one of the above denoising algorithms:
 python eval_denoisor.py --denoisor knoise
 ```
 
-+ `--input_path` / `-i`: path of the datasets folder. The details of supported file types can be checked at [here](https://github.com/KugaMaxx/taro-dvstoolkit).
++ `--input_path` / `-i`: path of the datasets folder.
 + `--output_path` / `-o`: path of denoising results. If not set, it will not be saved to disk.
-+ `--denoisor` / `-d`: selection of a denoising algorithm. These denoisors' nicknames can be found in `./configs/denoisors.py`. Some algorithms need to be compiled after installing libtorch, please refer to [CUDA compile](#cuda) for details.
++ `--denoisor` / `-d`: select a denoising algorithm which can be found in `./configs/denoisors.py`. Some algorithms need to be compiled after installing LibTorch, please refer to [CUDA compile](#cuda) for details.
 + `--excl_hotpixel`: decide whether to remove hot pixels in advance.
 
 
