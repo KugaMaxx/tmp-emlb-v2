@@ -3,7 +3,7 @@
 The simple benchmark for event-based denoising. Any questions please contact me with [KugaMaxx@outlook.com](mailto:KugaMaxx@outlook.com).
 
 <span id="animation"></span>
-![animation](https://raw.githubusercontent.com/KugaMaxx/tmp-emlb-v2/main/assets/images/animation.gif "animation")
+![animation](https://raw.githubusercontent.com/KugaMaxx/cuke-emlb/main/assets/images/animation.gif "animation")
 
 
 
@@ -11,8 +11,7 @@ The simple benchmark for event-based denoising. Any questions please contact me 
 
 Make sure that your device meets:
   + Ubuntu with [Cmake](https://cmake.org/) ≥ 3.5.1 and Python ≥ 3.8.
-  + [LibTorch](https://pytorch.org/) is optimal but needed by running CNN model.
-  + [DV](https://inivation.gitlab.io/dv/dv-docs/docs/getting-started/) is optimal when running real time.
+  + [DV](https://inivation.gitlab.io/dv/dv-docs/docs/getting-started/) and [LibTorch](https://pytorch.org/) are optimal.
 
 
 ### Dependencies
@@ -54,18 +53,18 @@ Then you will receive the visualization results as shown in [gif](#animation).
 
 At present, we have implemented the following event-based denoising algorithms. 
 
-| Done                                       | Algorithms        | Full Name                     | Year | Languages | DV       | Cuda     |
-| :----------------------------------------: | :---------------: | :---------------------------: | :--: | :-------: | :------: | :------: |
-| <input type="checkbox" disabled checked /> | [TS](#ts)         | Time Surface                  | 2016 | C++       | &#x2714; |          |
-| <input type="checkbox" disabled checked /> | [KNoise](#knoise) | Khodamoradi's Noise           | 2018 | C++       | &#x2714; |          |
-| <input type="checkbox" disabled checked /> | [EvFlow](#evflow) | Event Flow                    | 2019 | C++       | &#x2714; |          |
-| <input type="checkbox" disabled checked /> | [YNoise](#ynoise) | Yang's Noise                  | 2020 | C++       | &#x2714; |          |
-| <input type="checkbox" disabled checked /> | [EDnCNN](#edncnn) | Event Denoising CNN           | 2020 | C++       |          | &#x2714; |
-| <input type="checkbox" disabled checked /> | [DWF](#dwf)       | Double Window Filter          | 2021 | C++       | &#x2714; |          |
-| <input type="checkbox" disabled checked /> | [MLPF](#mlpf)     | Multilayer Perceptron Filter  | 2021 | C++       |          | &#x2714; |
-| <input type="checkbox" disabled />         | [EvZoom](#evzoom) | Event Zoom                    | 2021 | Python    |          | &#x2714; |
-| <input type="checkbox" disabled />         | [GEF](#gef)       | Guided Event Filter           | 2021 | Python    | &#x2714; |          |
-| <input type="checkbox" disabled checked /> | [RED](#red)       | Recursive Event Denoisor      | -    | C++       | &#x2714; |          |
+| Algorithms        | Full Name                     | Year | Languages | DV  | Cuda |
+| :---------------: | :---------------------------: | :--: | :-------: | :-: | :--: |
+| [TS](#ts)         | Time Surface                  | 2016 | C++       | ✓   |      |
+| [KNoise](#knoise) | Khodamoradi's Noise           | 2018 | C++       | ✓   |      |
+| [EvFlow](#evflow) | Event Flow                    | 2019 | C++       | ✓   |      |
+| [YNoise](#ynoise) | Yang's Noise                  | 2020 | C++       | ✓   |      |
+| [EDnCNN](#edncnn) | Event Denoising CNN           | 2020 | C++       |     | ✓    |
+| [DWF](#dwf)       | Double Window Filter          | 2021 | C++       | ✓   |      |
+| [MLPF](#mlpf)     | Multilayer Perceptron Filter  | 2021 | C++       |     | ✓    |
+| [EvZoom](#evzoom) | Event Zoom                    | 2021 | Python    |     | ✓    |
+| [GEF](#gef)       | Guided Event Filter           | 2021 | Python    | ✓   |      |
+| [RED](#red)       | Recursive Event Denoisor      | -    | C++       | ✓   |      |
 
 You can run `eval_denoisor.py` to test one of the above denoising algorithms:
 
