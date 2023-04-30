@@ -1,158 +1,296 @@
-# DVS Toolkit
+# E-MLB: Multilevel Benchmark for Event-Based Camera Denoising
 
-The simple toolkit for processing event-based data. Any suggestions and questions, please contact me with [KugaMaxx@outlook.com](mailto:KugaMaxx@outlook.com) or comment in the [issue](https://github.com/KugaMaxx/taro-dvstoolkit/issues).
+The simple benchmark for event-based denoising. Any questions please contact me with [KugaMaxx@outlook.com](mailto:KugaMaxx@outlook.com).
 
-<div align=center><img src="https://github.com/KugaMaxx/taro-dvstoolkit/blob/main/assets/images/demonstrate.gif" alt="demonstrate" width="100%"></div>
-
-![demo](https://raw.githubusercontent.com/KugaMaxx/taro-dvstoolkit/main/assets/images/demonstrate.gif "demo")
-
+<span id="animation"></span>
+![animation](https://raw.githubusercontent.com/KugaMaxx/tmp-emlb-v2/main/assets/images/animation.gif "animation")
 
 
-## Preliminaries
 
-### Installation
+## Installation
 
-We recommend to create a new [conda](https://docs.conda.io/en/main/miniconda.html) environment and install our package as follows:
-```unix
-python setup.py install
+Make sure that your device meets:
+  + Ubuntu with [Cmake](https://cmake.org/) ≥ 3.5.1 and Python ≥ 3.8.
+  + [LibTorch](https://pytorch.org/) is optimal but needed by running CNN model.
+  + [DV](https://inivation.gitlab.io/dv/dv-docs/docs/getting-started/) is optimal when running real time.
+
+
+### Dependencies
+
+Install dependencies, including [Pybind11](https://pybind11.readthedocs.io/en/stable/) (for python), [Boost](https://www.boost.org/) and [OpenBlas](https://www.openblas.net/) (for optimized performance):
+```bash
+sudo apt-get install python3-dev python3-pybind11
+sudo apt-get install libboost-dev
+sudo apt-get install libopenblas-dev
 ```
 
-### Running
 
-You can run `test/demo.py` to verify its validity
-```unix
-python test/demo.py
+### Build from source
+
+Create a new virtual environment (recommended):
+```bash
+conda create -n emlb python=3.10
+conda activate emlb
+```
+
+First, clone this repo and build by `setup.sh`:
+```bash
+sh setup.sh
 ```
 
 
-## Getting started
+### Running a demo
 
-This package aims to provide a series of wrapped modules to help users to do subsequent processing and analysis on event camera data. We follows standards in [dv](https://inivation.gitlab.io/dv/dv-docs/docs/getting-started/) and [dv-python](https://gitlab.com/inivation/dv/dv-python) documentation. **Now the supported data types are**:
- 
-- [x] Size
-- [x] Event
-- [x] Frame
-- [ ] IMU
+Run `demo.py` to test:
+```bash
+python demo.py
+```
 
----
+Then you will receive the visualization results as shown in [gif](#animation).
 
 
-### I/O Operations
 
-**DvsFile** can be used to read and write event data files. 
+## Inference with SOTA
 
-+ `load(path: str)` reads file containing streams of data that are defined like [dv](https://inivation.gitlab.io/dv/dv-docs/docs/getting-started/) style. It supports load all the information including `.aedat4` and `.txt` file.
+At present, we have implemented the following event-based denoising algorithms. 
 
-    ```python
-    from evtool.dvs import DvsFile
+| Done                                       | Algorithms        | Full Name                     | Year | Languages | DV       | Cuda     |
+| :----------------------------------------: | :---------------: | :---------------------------: | :--: | :-------: | :------: | :------: |
+| <input type="checkbox" disabled checked /> | [TS](#ts)         | Time Surface                  | 2016 | C++       | &#x2714; |          |
+| <input type="checkbox" disabled checked /> | [KNoise](#knoise) | Khodamoradi's Noise           | 2018 | C++       | &#x2714; |          |
+| <input type="checkbox" disabled checked /> | [EvFlow](#evflow) | Event Flow                    | 2019 | C++       | &#x2714; |          |
+| <input type="checkbox" disabled checked /> | [YNoise](#ynoise) | Yang's Noise                  | 2020 | C++       | &#x2714; |          |
+| <input type="checkbox" disabled checked /> | [EDnCNN](#edncnn) | Event Denoising CNN           | 2020 | C++       |          | &#x2714; |
+| <input type="checkbox" disabled checked /> | [DWF](#dwf)       | Double Window Filter          | 2021 | C++       | &#x2714; |          |
+| <input type="checkbox" disabled checked /> | [MLPF](#mlpf)     | Multilayer Perceptron Filter  | 2021 | C++       |          | &#x2714; |
+| <input type="checkbox" disabled />         | [EvZoom](#evzoom) | Event Zoom                    | 2021 | Python    |          | &#x2714; |
+| <input type="checkbox" disabled />         | [GEF](#gef)       | Guided Event Filter           | 2021 | Python    | &#x2714; |          |
+| <input type="checkbox" disabled checked /> | [RED](#red)       | Recursive Event Denoisor      | -    | C++       | &#x2714; |          |
 
-    # load event data
-    data = DvsFile.load(<path/to/load>)
+You can run `eval_denoisor.py` to test one of the above denoising algorithms:
 
-    # access dimensions of the event stream
-    height, width = data['size']
+```bash
+python eval_denoisor.py --denoisor knoise
+```
 
-    # loop through the "events"
-    for event in data['events']:
-        print(event.timestamp, event.x, event.y, event.polarity)
-
-    # loop through the "frames" (.txt not supported)
-    for frame in data['frames']:
-        print(frame.timestamp, frame.image.shape)
-    ```
-
-+ `save(data: Data, path: str)` writes data to `.txt` file, whose type is determined by suffix.
-    ```python
-    from evtool.dvs import DvsFile
-
-    # load event data
-    data = DvsFile.load(<path/to/load>)
-
-    # save event data
-    DvsFile.save(data, <path/to/save>)
-    ```
-
----
++ `--input_path` / `-i`: path of the datasets folder. The details of supported file types can be checked at [here](https://github.com/KugaMaxx/taro-dvstoolkit).
++ `--output_path` / `-o`: path of denoising results. If not set, it will not be saved to disk.
++ `--denoisor` / `-d`: selection of a denoising algorithm. These denoisors' nicknames can be found in `./configs/denoisors.py`. Some algorithms need to be compiled after installing libtorch, please refer to [CUDA compile](#cuda) for details.
++ `--excl_hotpixel`: decide whether to remove hot pixels in advance.
 
 
-### Standard Type
+### DV support
 
-**Event** stores basic information of event data, including `timestamp`, `x`, `y` and `polarity`.
+If you want to test above modules in DV software, please install the following additional package and then recompile `setup.sh`:
 
-+ `slice(t: interval{'unit'})` divides events into subsets by time interval.
-    ```python
-    # loop through sliced event packet by time interval ('s', 'ms', 'us')
-    for timestamp, event in data['events'].slice('25ms'):
-        print(timestamp, event.shape)
-    ```
+```bash
+sudo apt-get install dv-runtime-dev
+```
 
-+ `project(size: Size)` accumulates events into a 2D plane
-    ```python
-    import matplotlib.pyplot as plt
-
-    # get projected events frame
-    counts = data['events'].project(data['size'])
-
-    # display projected frame
-    plt.imshow(counts, vmin=-1, vmax=1, cmap=plt.set_cmap('bwr'))
-    plt.show()
-    ```
-
-+ `hotpixel(size: Size, thres: int)` returns potential hot-pixel index. It will project events first and return a set of index whose pixels' median numbers are larger than defined `thres`.
-    ```python
-    # return hot-pixel index
-    idx = data['events'].hotpixel(data['size'], thres=1000)
-
-    # filter all hot-pixels
-    data['events'] = data['events'][idx]
-    ```
-
-+ `shot_noise(size: Size, rate: int, down_sample: int)` generates shot noise events. It simulates the process of generating shot noise with Poisson distribution at fixed `rate` and downsamples raw events at `down_sample`.
-    ```python
-    # generate shot noise
-    data['events'] = data['events'].shot_noise(data['size'], rate=5, down_sample=0.8)
-    ```
-
-**Frame** stores Active Pixel Sensor (APS) outputs, including `timestamp` and `image`.
-
-+ `find_closest(t: int)` finds the frame which is closet to timestamp `t`, returns the frame's timestamp and corresponding image.
-    ```python
-    from numpy.random import randint
-    import matplotlib.pyplot as plt
-
-    # find closet frame
-    idx = data['frames'].find_closest(randint(0, 1E16, 1))
-    timestamp, image = data['frames'][idx]
-    
-    # display frame closest to referred timestamp
-    plt.imshow(image)
-    plt.show()
-    ```
-
----
+You can add the path where this project located in and you will find the list of available modules. More details please refer to the [official guide](https://inivation.gitlab.io/dv/dv-docs/docs/first-module/). It should be noted that we have not solved the problem of CNN method running in DV.
 
 
-### Utilities
+### CUDA compile <span id="cuda"></span>
 
-**Player** is a class to provide visualization. It has `matplotlib` and `plotly` implementation, the former is suggested to view a real-time animation while the latter is more suitable for static 2D and 3D rendering (which means may take a long time to generate animation).
+When installed LibTorch, you can compile `setup.sh` with `<path/to/libtorch>` as follows:
 
-+ `view(t: interval{'unit'}, core: {'matplotlib'(default), 'plotly'})` gives a glance at events stream.
-  ```python
-  from evtool.utils import Player
+```bash
+sh setup.py -l <path/to/libtorch>/share/cmake/Torch/
+```
 
-  # load file
-  data = DvsFile.load(<path/to/load>)
-
-  # load data into player and choose core
-  player = Player(data, core='matplotlib')
-
-  # view data
-  player.view("25ms", use_aps=True)
-  ```
----
+Download [pretrained models](https://drive.google.com/drive/folders/1BytQnsNRlv1rJyMotElIqklOz1oCt2Vd?usp=sharing) and paste them into `./modules/_net/` folder.
 
 
+
+## Building your own denoising benchmark
+
+### Datasets
+
+Download our **Event Noisy Dataset (END)**, including [D-END](https://drive.google.com/file/d/1ZatTSewmb-j6RsrJxMWEQIE3Sm1yraK-/view?usp=sharing) (Daytime part) and [N-END](https://drive.google.com/file/d/17ZDhuYdtHui9nqJAfiYYX27omPY7Rpl9/view?usp=sharing) (Night part), then unzip and paste them into `./data` folder:
+
+```
+./data/
+├── D-END
+│   ├── nd00
+│   │   ├── Architecture-ND00-1.aedat4
+│   │   ├── Architecture-ND00-2.aedat4
+│   │   ├── Architecture-ND00-3.aedat4
+│   │   ├── Bicycle-ND00-1.aedat4
+│   │   ├── Bicycle-ND00-2.aedat4
+│   │   ├── ...
+│   ├── nd04
+│   │   ├── Architecture-ND04-1.aedat4
+│   │   ├── Architecture-ND04-2.aedat4
+│   │   ├── ...
+│   ├── ...
+├── N-END
+│   ├── nd00
+│   │   ├── ...
+│   ├── ...
+├── ...
+```
+
+Also you can paste your customized datasets into `/data` folder(supported file types can be checked at [here](https://github.com/KugaMaxx/taro-dvstoolkit)). They should be rearranged as the following structure: 
+
+```
+./data/
+├── <Your Dataset Name>
+│   ├── Subclass-1
+│   │   ├── Sequences-1.*
+│   │   ├── Sequences-2.*
+│   │   ├── ...
+│   ├── Subclass-2
+│   │   ├── Sequences-1.*
+│   │   ├── Sequences-2.*
+│   │   ├── ...
+│   ├── ...
+├── ...
+```
+
+
+### Algorithms
+
+We provide a general template to facilitate building your own denoising algorithm, see `./configs/denoisors.py`:
+
+```python
+class your_denoisor(BaseDenoisor):
+    def __init__(self, model=<your_denoisor>, **params=<paramters>):
+        super().__init__()
+        self.model = model
+        self.params = params
+
+    def run(self, data: evtool.dtype):
+        # /*-----------------------------------*/
+        #   input denoising implementation here
+        # /*-----------------------------------*/
+        return data
+```
+
+
+
+## Citations
+
+### Projects using this repo
+
+This repository is derived from **[E-MLB: Multilevel Benchmark for Event-Based Camera Denoising](https://ieeexplore.ieee.org/document/10078400)**.
+
+```bibtex
+@article{ding2023mlb,
+  title     = {E-MLB: Multilevel Benchmark for Event-Based Camera Denoising},
+  author    = {Ding, Saizhe and Chen, Jinze and Wang, Yang and Kang, Yu and Song, Weiguo and Cheng, Jie and Cao, Yang},
+  journal   = {IEEE Transactions on Multimedia},
+  year      = {2023},
+  publisher = {IEEE}
+}
+```
+
+### Other references
+
+<span id="ts"></span>
+**Time Surface** &nbsp; Hots: a hierarchy of event-based time-surfaces for pattern recognition
+
+```bibtex
+@article{lagorce2016hots,
+  title     = {Hots: a hierarchy of event-based time-surfaces for pattern recognition},
+  author    = {Lagorce, Xavier and Orchard, Garrick and Galluppi, Francesco and Shi, Bertram E and Benosman, Ryad B},
+  journal   = {IEEE transactions on pattern analysis and machine intelligence},
+  pages     = {1346--1359},
+  year      = {2016},
+  publisher = {IEEE}
+}
+```
+
+<span id="knoise"></span>
+**KNoise** &nbsp; O(N)-Space Spatiotemporal Filter for Reducing Noise in Neuromorphic Vision Sensors
+
+```bibtex
+@article{khodamoradi2018n,  
+  title     = {O(N)-Space Spatiotemporal Filter for Reducing Noise in Neuromorphic Vision Sensors},
+  author    = {Khodamoradi, Alireza and Kastner, Ryan},
+  journal   = {IEEE Transactions on Emerging Topics in Computing},
+  year      = {2018},
+  publisher = {IEEE}
+}
+```
+
+<span id="evflow"></span>
+**EvFlow** &nbsp; EV-Gait: Event-based robust gait recognition using dynamic vision sensors
+
+```bibtex
+@inproceedings{wang2019ev,
+  title     = {EV-Gait: Event-based robust gait recognition using dynamic vision sensors},
+  author    = {Wang, Yanxiang and Du, Bowen and Shen, Yiran and Wu, Kai and Zhao, Guangrong and Sun, Jianguo and Wen, Hongkai},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages     = {6358--6367},
+  year      = {2019}
+}
+```
+
+<span id="ynoise"></span>
+**YNoise** &nbsp; Event density based denoising method for dynamic vision sensor
+
+```bibtex
+@article{feng2020event,
+  title     = {Event density based denoising method for dynamic vision sensor},
+  author    = {Feng, Yang and Lv, Hengyi and Liu, Hailong and Zhang, Yisa and Xiao, Yuyao and Han, Chengshan},
+  journal   = {Applied Sciences},
+  year      = {2020},
+  publisher = {MDPI}
+}
+```
+
+<span id="edncnn"></span>
+**EDnCNN** &nbsp; Event probability mask (epm) and event denoising convolutional neural network (edncnn) for neuromorphic cameras
+
+```bibtex
+@inproceedings{baldwin2020event,  
+  title     = {Event probability mask (epm) and event denoising convolutional neural network (edncnn) for neuromorphic cameras},
+  author    = {Baldwin, R and Almatrafi, Mohammed and Asari, Vijayan and Hirakawa, Keigo},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages     = {1701--1710},
+  year      = {2020}
+}
+```
+
+<span id="dwf"></span>
+<span id="mlpf"></span>
+**DWF & MLPF** &nbsp; Low Cost and Latency Event Camera Background Activity Denoising
+
+```bibtex
+@article{guo2022low,  
+  title     = {Low Cost and Latency Event Camera Background Activity Denoising},
+  author    = {Guo, Shasha and Delbruck, Tobi},
+  journal   = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  year      = {2022},
+  publisher = {IEEE}
+}
+```
+
+<span id="evzoom"></span>
+**EvZoom** &nbsp; EventZoom: Learning to denoise and super resolve neuromorphic events
+
+```bibtex
+@inproceedings{duan2021eventzoom,
+  title     = {EventZoom: Learning to denoise and super resolve neuromorphic events},
+  author    = {Duan, Peiqi and Wang, Zihao W and Zhou, Xinyu and Ma, Yi and Shi, Boxin},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages     = {12824--12833},
+  year      = {2021}
+}
+```
+
+<span id="gef"></span>
+**GEF** &nbsp; Guided event filtering: Synergy between intensity images and neuromorphic events for high performance imaging
+
+```bibtex
+@article{duan2021guided,
+  title     = {Guided event filtering: Synergy between intensity images and neuromorphic events for high performance imaging},
+  author    = {Duan, Peiqi and Wang, Zihao W and Shi, Boxin and Cossairt, Oliver and Huang, Tiejun and Katsaggelos, Aggelos K},
+  journal   = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  year      = {2021},
+  publisher = {IEEE}
+}
+```
 
 ## Acknowledgement
-
-Special thanks to [Jinze Chen](mailto:chjz@mail.ustc.edu.cn).
+Special thanks to [Yang Wang](mailto:ywang120@ustc.edu.cn).
